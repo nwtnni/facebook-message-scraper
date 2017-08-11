@@ -5,29 +5,34 @@ class Chat
 
 	attr_reader :user, :others, :messages
 
-	def initialize(data, user)
+	def initialize(data, user, others=nil, messages=nil)
 		@user = user
-		@others = scrape_others(data)
-		@messages = scrape_messages(data) 
+		@others = others.nil? ? scrape_others(data) : others
+		@messages = messages.nil? ? scrape_messages(data) : messages 
   end
 
   def missing?
-  	@others.length == 0
+  	@others == nil || @others.length == 0
   end
 
 	def group?
 		@others != nil && @others.length > 1
 	end
 
+	def +(chat)
+		timeA = @messages[0].time
+		timeB = chat.messages[0].time
+		all = timeA < timeB ? @messages + chat.messages : chat.messages + @messages
+		Chat.new(nil, @user, @others, all)			
+	end
+
 	private
 
 	def scrape_others(data)
-		others = Set.new(data.css('.user').map { |other| other.text.strip })
-		others.subtract [@user, '', nil]
+		Set.new(data.css('.user').map { |other| other.text.strip }).subtract [@user, '', nil]
 	end
 
 	def scrape_messages(data)
-		message_data = data.css('.message')
-		message_data.map { |message| Message.new(message) }
+		data.css('.message').map { |message| Message.new(message) }.sort_by { |message| message.time }
 	end
 end
