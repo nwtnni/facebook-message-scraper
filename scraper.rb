@@ -1,24 +1,35 @@
 require 'nokogiri'
 require 'time'
-
-def scrape_name(thread)
-	thread.css
-end
+require_relative 'chat'
 
 begin
     page = Nokogiri::HTML(open(ARGV[0]))
 rescue Exception => e
     puts "Invalid message file."
-    puts "Usage: ruby scraper.rb <MESSAGES_FILE>"
     exit
 end
 
+puts 'Done parsing html'
+
 user = page.css('h1')[0].text
-puts user
 
-# threads = page.css('div.thread')
-# threads.each do |thread|
-# 	other_name = thread.css('span.user').find { |other_name| other_name&.text != self_name }
-# 	puts other_name
-# end
+chats = page.css('div.thread')
 
+puts 'Done parsing chats'
+
+chats = chats.map { |chat| Chat.new(chat, user) }
+
+puts 'Done creating objects'
+
+chats = chats.select { |chat| not chat.missing_other? }
+
+puts 'Done filtering'
+
+chats = chats.sort_by { |chat| chat.messages.length }
+chats = chats.reverse
+
+puts 'Done sorting'
+
+chats.take(10).each do |chat|
+  puts "#{chat.messages.length} messages with #{chat.other}"
+end

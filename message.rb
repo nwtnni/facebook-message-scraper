@@ -3,6 +3,6 @@ class Message
 
 	def initialize(data)
 		@text = data.css('p')
-		@time = Time.parse(page.css('.meta')[0].text)
+		@time = Time.parse(data.css('.meta')[0].text)
 	end
 end
