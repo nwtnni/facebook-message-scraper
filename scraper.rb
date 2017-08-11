@@ -13,7 +13,8 @@ rescue Exception => e
     exit
 end
 
-self_name = page.css('title').text[0..-12]
+self_name = page.css('h1')[0].text
+puts self_name
 
 # threads = page.css('div.thread')
 # threads.each do |thread|
