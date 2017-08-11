@@ -13,8 +13,8 @@ rescue Exception => e
     exit
 end
 
-self_name = page.css('h1')[0].text
-puts self_name
+user = page.css('h1')[0].text
+puts user
 
 # threads = page.css('div.thread')
 # threads.each do |thread|
