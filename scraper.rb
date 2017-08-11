@@ -9,27 +9,14 @@ rescue Exception => e
     exit
 end
 
-puts 'Done parsing html'
-
 user = page.css('h1')[0].text
 
 chats = page.css('div.thread')
-
-puts 'Done parsing chats'
-
 chats = chats.map { |chat| Chat.new(chat, user) }
-
-puts 'Done creating objects'
-
-chats = chats.select { |chat| not chat.missing_other? }
-
-puts 'Done filtering'
-
+chats = chats.select { |chat| !(chat.group? || chat.missing?) }
 chats = chats.sort_by { |chat| chat.messages.length }
 chats = chats.reverse
 
-puts 'Done sorting'
-
-chats.take(10).each do |chat|
-  puts "#{chat.messages.length} messages with #{chat.other}"
+chats.each do |chat|
+  puts "#{chat.messages.length} messages with #{chat.others.to_a[0]}"
 end

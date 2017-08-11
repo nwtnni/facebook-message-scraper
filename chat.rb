@@ -1,26 +1,29 @@
+require 'set'
 require_relative 'message'
 
 class Chat
 
-	attr_reader :user, :other, :messages
+	attr_reader :user, :others, :messages
 
 	def initialize(data, user)
 		@user = user
-		@other = scrape_other(data)
+		@others = scrape_others(data)
 		@messages = scrape_messages(data) 
   end
 
-	def missing_other?
-    @other.to_s.empty?
+  def missing?
+  	@others.length == 0
   end
+
+	def group?
+		@others != nil && @others.length > 1
+	end
 
 	private
 
-	def scrape_other(data)
-		other_data = data.css('.user') do |other|
-			other.text != @user
-		end	
-		other_data.text
+	def scrape_others(data)
+		others = Set.new(data.css('.user').map { |other| other.text.strip })
+		others.subtract [@user, '', nil]
 	end
 
 	def scrape_messages(data)
