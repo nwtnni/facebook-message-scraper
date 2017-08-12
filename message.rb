@@ -8,6 +8,6 @@ class Message
   end
 
   def to_s
-    "#{ @time } #{ @author }: #{ @text }"
+    "#{ @time.strftime '%D %I:%M %p' } #{ @author }: #{ @text }"
   end
 end
