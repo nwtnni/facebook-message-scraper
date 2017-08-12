@@ -6,4 +6,8 @@ class Message
 		@text = data&.next&.text
 		@time = Time.parse(data.css('.meta')[0]&.text)
 	end
+
+  def to_s
+    "#{ @time } #{ @author }: #{ @text }"
+  end
 end

@@ -33,6 +33,6 @@ class Chat
 	end
 
 	def scrape_messages(data)
-		data.css('.message').map { |message| Message.new(message) }.sort_by { |message| message.time }
+		data.css('.message').map { |message| Message.new(message) }.reverse
 	end
 end

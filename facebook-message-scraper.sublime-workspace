@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"File",
+				"File\tFile.open(\"..\") { |file| .. }"
+			],
+			[
+				"thread",
+				"thread"
+			],
+			[
 				"break",
 				"break_words\t(ex25.rb)"
 			]
@@ -12,10 +20,38 @@
 	"buffers":
 	[
 		{
+			"file": "chat.rb",
+			"settings":
+			{
+				"buffer_size": 867,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "scraper.rb",
 			"settings":
 			{
-				"buffer_size": 187,
+				"buffer_size": 359,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.rb",
+			"settings":
+			{
+				"buffer_size": 534,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "message.rb",
+			"settings":
+			{
+				"buffer_size": 198,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -60,7 +96,7 @@
 	"command_palette":
 	{
 		"height": 354.0,
-		"last_filter": "pains",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -434,8 +470,18 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/home/nwtnni/Dropbox/School/cs/projects/facebook-message-scraper"
+	],
 	"file_history":
 	[
+		"/home/nwtnni/Stuff/facebook/html/messages.htm",
+		"/home/nwtnni/Dropbox/School/cs/projects/facebook-message-scraper/chat.rb",
+		"/home/nwtnni/Dropbox/School/cs/projects/facebook-message-scraper/conversation.rb",
+		"/home/nwtnni/Dropbox/School/cs/projects/facebook-message-scraper/thread.rb",
+		"/home/nwtnni/Dropbox/School/cs/projects/facebook-message-scraper/message.rb",
+		"/home/nwtnni/Stuff/index.htm",
 		"/home/nwtnni/Dropbox/School/writing/devos.md",
 		"/home/nwtnni/.config/sublime-text-3/Packages/User/Markdown.sublime-settings",
 		"/home/nwtnni/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
@@ -557,17 +603,11 @@
 		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/views/static_pages/home.html.erb",
 		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/views/users/show.html.erb",
 		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/views/static_pages/help.html.erb",
-		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/models/user.rb",
-		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/models/micropost.rb",
-		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/models/application_record.rb",
-		"/home/nni/.config/sublime-text-3/Packages/ERB Snippets/print_erb.sublime-snippet",
-		"/home/nni/.config/sublime-text-3/Packages/ERB Snippets/unless_erb.sublime-snippet",
-		"/home/nni/.config/sublime-text-3/Packages/ERB Snippets/text_field_tag.sublime-snippet",
-		"/home/nni/.config/sublime-text-3/Packages/ERB Snippets/submit_tag.sublime-snippet"
+		"/home/nni/Dropbox/School/CS/Projects/rails-tutorial/app/models/user.rb"
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 70.0
 	},
 	"find_in_files":
 	{
@@ -581,6 +621,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"chats",
+			"return",
+			"\n#",
+			"Kathy Lin",
+			"require",
+			"h1",
+			"[]",
+			"_name",
 			"[",
 			"25",
 			"(ESV)",
@@ -624,28 +672,60 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scraper.rb",
+					"file": "chat.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 187,
+						"buffer_size": 867,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								845,
+								845
 							]
 						],
 						"settings":
 						{
+							"auto_complete": false,
+							"syntax": "Packages/Ruby/Ruby.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scraper.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								268,
+								268
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme.tmTheme",
 							"syntax": "Packages/Ruby/Ruby.sublime-syntax"
 						},
 						"translation.x": 0.0,
@@ -654,17 +734,76 @@
 					},
 					"stack_index": 0,
 					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "main.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								112,
+								112
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Ruby/Ruby.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "message.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 198,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								141,
+								141
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme.tmTheme",
+							"syntax": "Packages/Ruby/Ruby.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 70.0
 	},
 	"input":
 	{
-		"height": 38.0
+		"height": 75.0
 	},
 	"layout":
 	{
@@ -691,7 +830,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 311.0
+		"height": 363.0
 	},
 	"output.find_results":
 	{
@@ -1154,7 +1293,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 273.0,
 	"status_bar_visible": true,
 	"template_settings":
