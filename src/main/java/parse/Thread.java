@@ -1,10 +1,12 @@
 package parse;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jsoup.nodes.Element;
@@ -13,18 +15,17 @@ public class Thread {
 	
 	private final Set<String> ID;
 	private Set<String> people;
-	private ArrayList<Message> messages;
+	private List<Message> messages;
 	
 	public Thread(Element e) {
 		messages = new ArrayList<>();
 		e.select(".message").forEach(message -> messages.add(new Message(message)));
+		Collections.reverse(messages);
 		people = new HashSet<String>(e.select(".user").eachText());
-		people.forEach(person -> System.out.println(person));
 		ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
-		ID.forEach(id -> System.out.println(id));
 	}
 	
-	private Thread(Set<String> ID, Set<String> people, ArrayList<Message> messages) {
+	private Thread(Set<String> ID, Set<String> people, List<Message> messages) {
 		this.ID = ID;
 		this.people = people;
 		this.messages = messages;
@@ -34,10 +35,54 @@ public class Thread {
 		return Collections.unmodifiableSet(ID);
 	}
 	
+	public ZonedDateTime getStartTime() {
+		return messages.get(0).getTime();
+	}
+	
+	public ZonedDateTime getEndTime() {
+		return messages.get(messages.size() - 1).getTime();
+	}
+	
+	public List<Message> getMessages() {
+		return Collections.unmodifiableList(messages);
+	}
+	
 	public boolean isGroup() {
 		return ID.size() > 2;
 	}
 	
+	/*
+	 * Combines two threads with the same person or group.
+	 */
+	public Thread add(Thread other) {
+		
+		if (!equals(other)) {
+			return null;
+		}
+		
+		ZonedDateTime timeA = getStartTime();
+		ZonedDateTime timeB = other.getStartTime();
+		
+		List<Message> combined = new ArrayList<>();
+		
+		if (timeA.isBefore(timeB)) {
+			combined.addAll(messages);
+			combined.addAll(other.getMessages());
+		} else {
+			combined.addAll(other.getMessages());
+			combined.addAll(messages);
+		}
+		
+		return new Thread(ID, people, combined);
+	}
+	
+	/*
+	 * Two threads are identical if their participants are
+	 * identical.
+	 * 
+	 * Note: this ignores edge case of different group threads
+	 * with the same people.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Thread) {

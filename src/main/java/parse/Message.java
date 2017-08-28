@@ -21,6 +21,10 @@ public class Message {
 		time = ZonedDateTime.parse(temp.replace("am", "AM").replace("pm", "PM"), IN_FORMAT);
 	}
 	
+	public ZonedDateTime getTime() {
+		return time;
+	}
+	
 	@Override
 	public String toString() {
 		return time.toString() + " " + author + ": " + text;
