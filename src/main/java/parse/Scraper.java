@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 public class Scraper {
 	
 	private ArrayList<Thread> threads;
+	private String user;
 	
 	public void parse(File f) throws IOException {
 	
@@ -17,8 +18,7 @@ public class Scraper {
 
 		threads = new ArrayList<>();
 		doc.select(".thread").forEach(thread -> threads.add(new Thread(thread)));
-		System.out.println(doc.select("h1").first().text());
-		
+		user = doc.select("h1").first().text();
 	}
 	
 	public static void main(String[] args) {
@@ -26,6 +26,7 @@ public class Scraper {
 		Scraper s = new Scraper();
 		try {
 			s.parse(f);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
