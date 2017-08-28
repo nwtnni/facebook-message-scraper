@@ -1,5 +1,6 @@
 package parse;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,11 +22,20 @@ public class Thread {
 		people.forEach(person -> System.out.println(person));
 		ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
 		ID.forEach(id -> System.out.println(id));
-
+	}
+	
+	private Thread(Set<String> ID, Set<String> people, ArrayList<Message> messages) {
+		this.ID = ID;
+		this.people = people;
+		this.messages = messages;
 	}
 	
 	public Set<String> getID() {
 		return Collections.unmodifiableSet(ID);
+	}
+	
+	public boolean isGroup() {
+		return ID.size() > 2;
 	}
 	
 	@Override
