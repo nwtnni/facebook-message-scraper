@@ -53,6 +53,9 @@
                           </items>
                         </ToolBar>
                      </bottom>
+                     <center>
+                        <TilePane fx:id="people" prefHeight="200.0" prefWidth="200.0" tileAlignment="CENTER_LEFT" BorderPane.alignment="CENTER" />
+                     </center>
                   </BorderPane>
                </children>
             </AnchorPane>
@@ -62,12 +65,12 @@
                      <top>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <items>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Conversation With" />
+                              <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversation With" />
                            </items>
                         </ToolBar>
                      </top>
                      <center>
-                        <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
+                        <TextArea fx:id="display" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </children>

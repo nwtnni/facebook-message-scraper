@@ -10,6 +10,7 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'application'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -30,12 +31,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task fatJar(type: Jar) {
-	setGroup('build')
-	manifest {
-        attributes 'Main-Class': 'parse.Scraper'
+jar {
+    manifest {
+        attributes 'Main-Class': "gui.FacebookMessageScraper"
     }
-    baseName = project.name
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
