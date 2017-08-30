@@ -27,6 +27,9 @@ public class FacebookMessageScraper extends Application {
 	private TilePane people;
 	private Text title;
 	
+	private Filter f;
+	private Sort s;
+	
 	@Override
 	public void start(Stage primary) throws Exception {
 
@@ -64,25 +67,22 @@ public class FacebookMessageScraper extends Application {
 		title = (Text) fxml.getNamespace().get("text");
 	
 		initializeSort();
+		initializeFilter();
 		
 		primary.setScene(scene);
 		
 	}
 	
-	private void displayPeople() {
-		
-	}
-	
 	private void initializeSort() {
 		sort.getItems().addAll(Sort.values());
-		sort.setValue(Sort.LONG);
-		
-		
-		
+		sort.valueProperty().addListener((observable, oldV, newV) -> s = newV);
+		sort.setValue(Sort.LONG);		
 	}
 	
 	private void initializeFilter() {
-		
+		filter.getItems().addAll(Filter.values());
+		filter.valueProperty().addListener((observable, oldV, newV) -> f = newV);
+		filter.setValue(Filter.ALL);
 	}
 
 	public static void main(String[] args) {

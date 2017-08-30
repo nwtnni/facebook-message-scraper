@@ -6,9 +6,12 @@ import parse.Thread;
 public enum Sort {
 	
 	EARLY("Earliest First", (a, b) -> {
-	
+		return a.getStartTime().compareTo(b.getStartTime());
 	}), 
-	LONG("Longest First");
+	
+	LONG("Longest First", (a, b) -> {
+		return b.getMessages().size() - a.getMessages().size();
+	});
 	
 	private String str;
 	private Comparator<Thread> cmp;
