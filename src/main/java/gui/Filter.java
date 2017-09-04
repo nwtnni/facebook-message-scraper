@@ -24,8 +24,8 @@ public enum Filter {
 		this.str = str;
 	}
 	
-	public boolean satisfies(Thread t) {
-		return condition.test(t);
+	public Predicate<Thread> getPredicate() {
+		return condition;
 	}
 	
 	@Override

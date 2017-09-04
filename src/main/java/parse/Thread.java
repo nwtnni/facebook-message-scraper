@@ -1,7 +1,7 @@
+
 package parse;
 
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,6 +45,11 @@ public class Thread {
 	
 	public List<Message> getMessages() {
 		return Collections.unmodifiableList(messages);
+	}
+	
+	public String getPeople() {
+		String names = people.stream().sorted().reduce("", (a, b) -> a + ", " + b);
+		return (names.length() > 3) ? names.substring(2) : names;
 	}
 	
 	public boolean isGroup() {

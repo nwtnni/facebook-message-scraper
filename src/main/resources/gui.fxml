@@ -54,7 +54,11 @@
                         </ToolBar>
                      </bottom>
                      <center>
-                        <TilePane fx:id="people" prefHeight="200.0" prefWidth="200.0" tileAlignment="CENTER_LEFT" BorderPane.alignment="CENTER" />
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <TilePane fx:id="people" alignment="CENTER_LEFT" prefHeight="939.0" prefWidth="476.0" tileAlignment="TOP_LEFT" />
+                           </content>
+                        </ScrollPane>
                      </center>
                   </BorderPane>
                </children>

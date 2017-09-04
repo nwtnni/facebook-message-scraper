@@ -1,7 +1,10 @@
 package gui;
 
+import parse.Thread;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,20 +36,20 @@ public class FacebookMessageScraper extends Application {
 	@Override
 	public void start(Stage primary) throws Exception {
 
-//		FileChooser fc = new FileChooser();
-//		fc.setTitle("Select your message file to get started!");
-//		File f = fc.showOpenDialog(primary);
-//
-//		if (f == null) {
-//			Platform.exit();
-//		}
-//		
-//		try {
-//			scraper = new Scraper();
-//			scraper.parse(f);
-//		} catch (IOException e) {
-//			Platform.exit();
-//		}
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Select your message file to get started!");
+		File f = fc.showOpenDialog(primary);
+
+		if (f == null) {
+			Platform.exit();
+		}
+		
+		try {
+			scraper = new Scraper();
+			scraper.parse(f);
+		} catch (IOException e) {
+			Platform.exit();
+		}
 		
 		initializeGui(primary);
 		
@@ -69,6 +72,8 @@ public class FacebookMessageScraper extends Application {
 		initializeSort();
 		initializeFilter();
 		
+		refreshChats();
+		
 		primary.setScene(scene);
 		
 	}
@@ -83,6 +88,16 @@ public class FacebookMessageScraper extends Application {
 		filter.getItems().addAll(Filter.values());
 		filter.valueProperty().addListener((observable, oldV, newV) -> f = newV);
 		filter.setValue(Filter.ALL);
+	}
+	
+	private void refreshChats() {
+		people.getChildren().clear();
+		scraper.getThreads().stream()
+			//.filter(f.getPredicate())
+			.sorted(s.getComparator())
+			.forEachOrdered(t -> {
+				people.getChildren().add(new ThreadButton(t, display));
+			});
 	}
 
 	public static void main(String[] args) {
