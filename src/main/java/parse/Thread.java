@@ -15,14 +15,17 @@ public class Thread {
 	
 	private final Set<String> ID;
 	private Set<String> people;
+	private String user;
 	private List<Message> messages;
 	
-	public Thread(Element e) {
-		messages = new ArrayList<>();
+	public Thread(Element e, String user) {
+		this.user = user;
+		this.messages = new ArrayList<>();
 		e.select(".message").forEach(message -> messages.add(new Message(message)));
 		Collections.reverse(messages);
-		people = new HashSet<String>(e.select(".user").eachText());
-		ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
+		this.people = new HashSet<String>(e.select(".user").eachText());
+		this.people.remove(user);
+		this.ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
 	}
 	
 	private Thread(Set<String> ID, Set<String> people, List<Message> messages) {

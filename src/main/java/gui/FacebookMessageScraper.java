@@ -93,7 +93,7 @@ public class FacebookMessageScraper extends Application {
 	private void refreshChats() {
 		people.getChildren().clear();
 		scraper.getThreads().stream()
-			//.filter(f.getPredicate())
+			.filter(f.getPredicate())
 			.sorted(s.getComparator())
 			.forEachOrdered(t -> {
 				people.getChildren().add(new ThreadButton(t, display));

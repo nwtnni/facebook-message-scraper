@@ -8,12 +8,15 @@ import parse.Thread;
 public class ThreadButton extends Button {
 
 	private static final int MAX_LENGTH = 40;
+	private static final int WIDTH = 450;
 	
 	private Thread thread;
 	
 	public ThreadButton(Thread thread, TextArea display) {
 		super(thread.getPeople().length() > MAX_LENGTH ? thread.getPeople().substring(0, MAX_LENGTH) : thread.getPeople());
 		this.thread = thread;
+		
+		setPrefWidth(WIDTH);
 		
 		this.setOnAction(click -> {
 			StringBuilder sb = new StringBuilder();

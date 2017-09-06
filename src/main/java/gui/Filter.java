@@ -22,6 +22,7 @@ public enum Filter {
 	
 	private Filter(String str, Predicate<Thread> condition) {
 		this.str = str;
+		this.condition = condition;
 	}
 	
 	public Predicate<Thread> getPredicate() {

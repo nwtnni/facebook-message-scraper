@@ -1,5 +1,6 @@
 package parse;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,6 +10,8 @@ public class Message {
 
 	private static final DateTimeFormatter IN_FORMAT = 
 			DateTimeFormatter.ofPattern("EEEE',' MMMM d',' uuuu 'at' h:mma z");
+	private static final DateTimeFormatter OUT_FORMAT =
+			DateTimeFormatter.ofPattern("h:mma M/d/y").withZone(ZoneId.of("EST", ZoneId.SHORT_IDS));
 	
 	private final String author;
 	private final String text;
@@ -27,6 +30,6 @@ public class Message {
 	
 	@Override
 	public String toString() {
-		return time.toString() + " " + author + ": " + text;
+		return time.format(OUT_FORMAT) + " " + author + ": " + text;
 	}
 }
