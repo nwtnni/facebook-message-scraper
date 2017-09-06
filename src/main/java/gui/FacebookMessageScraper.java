@@ -56,6 +56,7 @@ public class FacebookMessageScraper extends Application {
 		}
 		
 		initializeGui(primary);
+		primary.setTitle("Facebook Message Scraper");
 		primary.show();
 	}
 	
