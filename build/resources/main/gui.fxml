@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <SplitPane dividerPositions="0.3016270337922403" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <BorderPane layoutX="81.0" layoutY="230.0" prefHeight="958.0" prefWidth="795.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <top>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter" wrappingWidth="50.0">
+                                 <font>
+                                    <Font name="Lucida Sans Regular" size="15.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="filter" prefHeight="25.0" prefWidth="150.0" />
+                              <Separator orientation="VERTICAL">
+                                 <padding>
+                                    <Insets left="15.0" right="15.0" />
+                                 </padding>
+                              </Separator>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort" wrappingWidth="50.0">
+                                 <font>
+                                    <Font name="Lucida Sans Regular" size="15.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="sort" prefHeight="25.0" prefWidth="150.0" />
+                          </items>
+                        </ToolBar>
+                     </top>
+                     <bottom>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search" textAlignment="CENTER" wrappingWidth="50.0">
+                                 <font>
+                                    <Font name="Lucida Sans Regular" size="15.0" />
+                                 </font>
+                              </Text>
+                              <Separator orientation="VERTICAL" />
+                              <TextField fx:id="search" prefHeight="25.0" prefWidth="390.0" promptText="Name(s)" />
+                          </items>
+                        </ToolBar>
+                     </bottom>
+                     <center>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <TilePane fx:id="people" prefHeight="939.0" prefWidth="476.0" tileAlignment="TOP_LEFT" />
+                           </content>
+                        </ScrollPane>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <BorderPane layoutX="-84.0" layoutY="-28.0" prefHeight="958.0" prefWidth="1112.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <top>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <items>
+                              <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="Facebook Message Scraper" />
+                           </items>
+                        </ToolBar>
+                     </top>
+                     <center>
+                        <TextArea fx:id="display" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                              <Button fx:id="save" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefWidth="250.0" text="Save As" />
+                          </items>
+                        </ToolBar>
+                     </bottom>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
