@@ -64,7 +64,7 @@ public class FacebookMessageScraper extends Application {
 		search = (TextField) fxml.getNamespace().get("search");
 		display = (TextArea) fxml.getNamespace().get("display");
 		people = (TilePane) fxml.getNamespace().get("people");
-		title = (Text) fxml.getNamespace().get("text");
+		title = (Text) fxml.getNamespace().get("title");
 	
 		initializeSort();
 		initializeFilter();
@@ -116,7 +116,7 @@ public class FacebookMessageScraper extends Application {
 			.filter(f.getPredicate())
 			.sorted(s.getComparator())
 			.forEachOrdered(t -> {
-				people.getChildren().add(new ThreadButton(t, display));
+				people.getChildren().add(new ThreadButton(t, display, title));
 			});
 	}
 
