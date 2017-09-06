@@ -57,21 +57,8 @@ public class Thread {
 	}
 	
 	public String toString() {
-//		String temp = getPeople();
-//		return (temp.length() > MAX_LENGTH) ? temp.substring(0, MAX_LENGTH) + "..." : temp;
-		return getRandomName(5) + " " + getRandomName(3);
-	}
-	
-	public static String getRandomName(int len) {
-		String[] derp = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
-		Random r = new Random();
-
-		String name = derp[r.nextInt(26)].toUpperCase();
-		
-		for (int i = 0; i < r.nextInt(5) + len; i++) {
-			name += derp[r.nextInt(26)];
-		}
-		return name;
+		String temp = getPeople();
+		return (temp.length() > MAX_LENGTH) ? temp.substring(0, MAX_LENGTH) + "..." : temp;
 	}
 	
 	public boolean isGroup() {
