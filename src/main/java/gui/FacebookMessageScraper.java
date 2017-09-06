@@ -1,10 +1,7 @@
 package gui;
 
-import parse.Thread;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -14,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import parse.Scraper;
@@ -32,6 +28,7 @@ public class FacebookMessageScraper extends Application {
 	
 	private Filter f;
 	private Sort s;
+	private String query;
 	
 	@Override
 	public void start(Stage primary) throws Exception {
@@ -71,6 +68,7 @@ public class FacebookMessageScraper extends Application {
 	
 		initializeSort();
 		initializeFilter();
+		initializeSearch();
 		
 		refreshChats();
 		
@@ -80,19 +78,41 @@ public class FacebookMessageScraper extends Application {
 	
 	private void initializeSort() {
 		sort.getItems().addAll(Sort.values());
-		sort.valueProperty().addListener((observable, oldV, newV) -> s = newV);
-		sort.setValue(Sort.LONG);		
+		sort.setValue(Sort.LONG);
+		s = Sort.LONG;
+		sort.valueProperty().addListener((observable, oldV, newV) -> {
+			s = newV;
+			refreshChats();
+		});
 	}
 	
 	private void initializeFilter() {
 		filter.getItems().addAll(Filter.values());
-		filter.valueProperty().addListener((observable, oldV, newV) -> f = newV);
 		filter.setValue(Filter.ALL);
+		f = Filter.ALL;
+		filter.valueProperty().addListener((observable, oldV, newV) -> {
+			f = newV;
+			refreshChats();
+		});
+	}
+	
+	private void initializeSearch() {
+		search.textProperty().addListener((observable, oldV, newV) -> {
+			query = (newV == null || newV.length() == 0) ? null : newV;
+			refreshChats();
+		});
 	}
 	
 	private void refreshChats() {
 		people.getChildren().clear();
 		scraper.getThreads().stream()
+			.filter(t -> {
+				if (query == null) {
+					return true;
+				} else {
+					return t.getPeople().contains(query);
+				}
+			})
 			.filter(f.getPredicate())
 			.sorted(s.getComparator())
 			.forEachOrdered(t -> {
