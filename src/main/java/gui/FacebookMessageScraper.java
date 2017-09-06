@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import parse.Scraper;
 import javafx.stage.FileChooser;
-
+import javafx.stage.FileChooser.ExtensionFilter;
 import parse.Thread;
 
 public class FacebookMessageScraper extends Application {
@@ -39,9 +39,9 @@ public class FacebookMessageScraper extends Application {
 	
 	@Override
 	public void start(Stage primary) throws Exception {
-
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select your message file to get started!");
+		fc.setSelectedExtensionFilter(new ExtensionFilter("Message file", "*.htm"));
 		File f = fc.showOpenDialog(primary);
 
 		if (f == null) {
@@ -113,6 +113,7 @@ public class FacebookMessageScraper extends Application {
 		save.setOnAction(click -> {
 			FileChooser fc = new FileChooser();
 			fc.setTitle("Choose where to save this conversation.");
+			fc.setSelectedExtensionFilter(new ExtensionFilter("Text file", "*.txt"));
 			File f = fc.showSaveDialog(primary);
 			
 			try (FileWriter writer = new FileWriter(f)) {
@@ -152,6 +153,10 @@ public class FacebookMessageScraper extends Application {
 	}
 
 	public static void main(String[] args) {
-		Application.launch(args);
+		try {
+			Application.launch(args);
+		} catch (Exception e) {
+			//TODO
+		}
 	}
 }

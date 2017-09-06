@@ -14,7 +14,7 @@ import org.jsoup.nodes.Element;
 
 public class Thread {
 	
-	private static final int MAX_LENGTH = 60;
+	private static final int MAX_LENGTH = 55;
 	
 	private final Set<String> ID;
 	private Set<String> people;

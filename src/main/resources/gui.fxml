@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <SplitPane dividerPositions="0.3016270337922403" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -16,23 +16,21 @@
                      <top>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter" wrappingWidth="50.0">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter">
                                  <font>
                                     <Font name="Lucida Sans Regular" size="15.0" />
                                  </font>
                               </Text>
-                              <ChoiceBox fx:id="filter" prefHeight="25.0" prefWidth="150.0" />
-                              <Separator orientation="VERTICAL">
-                                 <padding>
-                                    <Insets left="15.0" right="15.0" />
-                                 </padding>
-                              </Separator>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort" wrappingWidth="50.0">
+                              <Separator orientation="VERTICAL" />
+                              <ChoiceBox fx:id="filter" prefHeight="25.0" prefWidth="120.0" />
+                              <HBox prefWidth="15.0" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort">
                                  <font>
                                     <Font name="Lucida Sans Regular" size="15.0" />
                                  </font>
                               </Text>
-                              <ChoiceBox fx:id="sort" prefHeight="25.0" prefWidth="150.0" />
+                              <Separator orientation="VERTICAL" />
+                              <ChoiceBox fx:id="sort" prefHeight="25.0" prefWidth="120.0" />
                           </items>
                         </ToolBar>
                      </top>
@@ -45,14 +43,14 @@
                                  </font>
                               </Text>
                               <Separator orientation="VERTICAL" />
-                              <TextField fx:id="search" prefHeight="25.0" prefWidth="390.0" promptText="Name(s)" />
+                              <TextField fx:id="search" prefHeight="25.0" prefWidth="300.0" promptText="Name(s)" />
                           </items>
                         </ToolBar>
                      </bottom>
                      <center>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <ScrollPane prefWidth="380.0" BorderPane.alignment="CENTER">
                            <content>
-                              <TilePane fx:id="people" prefHeight="939.0" prefWidth="476.0" tileAlignment="TOP_LEFT" />
+                              <TilePane fx:id="people" prefColumns="1" prefWidth="360.0" tileAlignment="TOP_LEFT" />
                            </content>
                         </ScrollPane>
                      </center>
@@ -65,7 +63,7 @@
                      <top>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <items>
-                              <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="Facebook Message Scraper" />
+                              <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" />
                            </items>
                         </ToolBar>
                      </top>
