@@ -76,6 +76,13 @@
                      <center>
                         <TextArea fx:id="display" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
                      </center>
+                     <bottom>
+                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <items>
+                              <Button fx:id="save" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefWidth="250.0" text="Save As" />
+                          </items>
+                        </ToolBar>
+                     </bottom>
                   </BorderPane>
                </children>
             </AnchorPane>

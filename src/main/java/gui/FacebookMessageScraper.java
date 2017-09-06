@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -12,9 +13,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.TilePane;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import parse.Scraper;
 import javafx.stage.FileChooser;
+
+import parse.Thread;
 
 public class FacebookMessageScraper extends Application {
 
@@ -24,7 +28,10 @@ public class FacebookMessageScraper extends Application {
 	private TextField search;
 	private TextArea display;
 	private TilePane people;
-	private Text title;
+	private Text title;	
+	private Button save;
+	
+	private Thread thread;
 	
 	private Filter f;
 	private Sort s;
@@ -49,13 +56,11 @@ public class FacebookMessageScraper extends Application {
 		}
 		
 		initializeGui(primary);
-		
 		primary.show();
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void initializeGui(Stage primary) throws IOException {
-		
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource("/gui.fxml"));
 		final Scene scene = new Scene(fxml.load());
 		
@@ -65,15 +70,15 @@ public class FacebookMessageScraper extends Application {
 		display = (TextArea) fxml.getNamespace().get("display");
 		people = (TilePane) fxml.getNamespace().get("people");
 		title = (Text) fxml.getNamespace().get("title");
-	
+		save = (Button) fxml.getNamespace().get("save");
+		
 		initializeSort();
 		initializeFilter();
 		initializeSearch();
+		initializeSave(primary);
 		
 		refreshChats();
-		
 		primary.setScene(scene);
-		
 	}
 	
 	private void initializeSort() {
@@ -103,6 +108,19 @@ public class FacebookMessageScraper extends Application {
 		});
 	}
 	
+	private void initializeSave(Stage primary) {
+		save.setOnAction(click -> {
+			FileChooser fc = new FileChooser();
+			fc.setTitle("Choose where to save this conversation.");
+			File f = fc.showSaveDialog(primary);
+			
+			try (FileWriter writer = new FileWriter(f)) {
+				writer.write(display.getText());
+			} catch (IOException e) { //TODO 
+			}
+		});
+	}
+	
 	private void refreshChats() {
 		people.getChildren().clear();
 		scraper.getThreads().stream()
@@ -116,12 +134,23 @@ public class FacebookMessageScraper extends Application {
 			.filter(f.getPredicate())
 			.sorted(s.getComparator())
 			.forEachOrdered(t -> {
-				people.getChildren().add(new ThreadButton(t, display, title));
+				people.getChildren().add(new ThreadButton(t, this));
 			});
+	}
+	
+	private void refreshThread() {
+		StringBuilder sb = new StringBuilder();
+		thread.getMessages().forEach(message -> sb.append(message + "\n"));
+		display.setText(sb.toString());
+		title.setText("Conversation With " + thread.toString() + " (" + thread.getMessages().size() + " lines)");
+	}
+	
+	public void setThread(Thread thread) {
+		this.thread = thread;
+		refreshThread();
 	}
 
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
-
 }

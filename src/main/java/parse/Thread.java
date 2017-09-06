@@ -13,13 +13,13 @@ import org.jsoup.nodes.Element;
 
 public class Thread {
 	
+	private static final int MAX_LENGTH = 60;
+	
 	private final Set<String> ID;
 	private Set<String> people;
-	private String user;
 	private List<Message> messages;
 	
 	public Thread(Element e, String user) {
-		this.user = user;
 		this.messages = new ArrayList<>();
 		e.select(".message").forEach(message -> messages.add(new Message(message)));
 		Collections.reverse(messages);
@@ -53,6 +53,11 @@ public class Thread {
 	public String getPeople() {
 		String names = people.stream().sorted().reduce("", (a, b) -> a + ", " + b);
 		return (names.length() > 3) ? names.substring(2) : names;
+	}
+	
+	public String toString() {
+		String temp = getPeople();
+		return (temp.length() > MAX_LENGTH) ? temp.substring(0, MAX_LENGTH) + "..." : temp;
 	}
 	
 	public boolean isGroup() {
