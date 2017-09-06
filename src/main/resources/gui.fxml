@@ -32,11 +32,7 @@
                                     <Font name="Lucida Sans Regular" size="15.0" />
                                  </font>
                               </Text>
-                              <ChoiceBox fx:id="sort" prefHeight="25.0" prefWidth="150.0">
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                              </ChoiceBox>
+                              <ChoiceBox fx:id="sort" prefHeight="25.0" prefWidth="150.0" />
                           </items>
                         </ToolBar>
                      </top>
