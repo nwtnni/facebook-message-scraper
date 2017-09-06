@@ -30,6 +30,7 @@ public class Message {
 	
 	@Override
 	public String toString() {
-		return time.format(OUT_FORMAT) + " " + author + ": " + text;
+//		return time.format(OUT_FORMAT) + " " + author + ": " + text;
+		return time.format(OUT_FORMAT) + " " + Thread.getRandomName(5) + " " + Thread.getRandomName(3) + ": " + text;
 	}
 }
