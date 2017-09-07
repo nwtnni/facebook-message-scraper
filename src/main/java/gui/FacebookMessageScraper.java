@@ -3,6 +3,8 @@ package gui;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,7 +28,7 @@ import util.Paginate;
 public class FacebookMessageScraper extends Application {
 
 	private static final int MESSAGES_PER_PAGE = 1000;
-	private static final int THREADS_PER_PAGE = 15;
+	private static final int THREADS_PER_PAGE = 12;
 	
 	private Scraper scraper;
 	private ChoiceBox<Filter> filter;
@@ -104,7 +106,8 @@ public class FacebookMessageScraper extends Application {
 		initializeSearch();
 		initializeSave(primary);
 		
-		refreshChats();
+		refreshFilters();
+		refreshThreads();
 		primary.setScene(scene);
 	}
 	
@@ -114,7 +117,7 @@ public class FacebookMessageScraper extends Application {
 		s = Sort.LONG;
 		sort.valueProperty().addListener((observable, oldV, newV) -> {
 			s = newV;
-			refreshChats();
+			refreshFilters();
 		});
 	}
 	
@@ -124,14 +127,14 @@ public class FacebookMessageScraper extends Application {
 		f = Filter.ALL;
 		filter.valueProperty().addListener((observable, oldV, newV) -> {
 			f = newV;
-			refreshChats();
+			refreshFilters();
 		});
 	}
 	
 	private void initializeSearch() {
 		search.textProperty().addListener((observable, oldV, newV) -> {
 			query = (newV == null || newV.length() == 0) ? null : newV;
-			refreshChats();
+			refreshFilters();
 		});
 	}
 	
@@ -151,11 +154,11 @@ public class FacebookMessageScraper extends Application {
 		});
 	}
 	
-	private void refreshChats() {
-		people.getChildren().clear();
-		scraper.getThreads().stream()
+	private void refreshFilters() {
+		threads = new Paginate<Thread>(scraper.getThreads()
+			.stream()
 			.filter(t -> {
-				if (query == null) {
+				if (query == null || query.equals("")) {
 					return true;
 				} else {
 					return t.getPeople().contains(query);
@@ -163,18 +166,40 @@ public class FacebookMessageScraper extends Application {
 			})
 			.filter(f.getPredicate())
 			.sorted(s.getComparator())
-			.forEachOrdered(t -> {
-				people.getChildren().add(new ThreadButton(t, this));
-			});
+			.collect(Collectors.toList()), THREADS_PER_PAGE);
+		refreshThreads();
+	}
+	
+	private void refreshThreads() {
+		people.getChildren().clear();
+		
+		nextThread.setOnAction(click -> {
+			threads.next();
+			refreshThreads();
+		});
+		
+		backThread.setOnAction(click -> {
+			threads.back();
+			refreshThreads();
+		});
+		
+		threads.page().forEach(t -> people.getChildren().add(new ThreadButton(t, this)));
+		backThread.setDisable(threads.current() == 0);
+		nextThread.setDisable(threads.current() == threads.pages() - 1);
 	}
 	
 	private void refreshThread() {
 		StringBuilder sb = new StringBuilder();
 		thread.page().forEach(message -> sb.append(message + "\n"));
 		display.setText(sb.toString());
+		
 		totalPages.setText("out of " + thread.pages());
 		setMessage.setText(Integer.toString(thread.current() + 1));
+
 		title.setText("Conversation With " + threadName + " (" + thread.size() + " lines)");
+		
+		backMessage.setDisable(thread.current() == 0);
+		nextMessage.setDisable(thread.current() == thread.pages() - 1);
 	}
 	
 	public void setThread(Thread t) {
@@ -213,7 +238,7 @@ public class FacebookMessageScraper extends Application {
 		try {
 			Application.launch(args);
 		} catch (Exception e) {
-			//TODO
+			e.printStackTrace(System.out);
 		}
 	}
 }

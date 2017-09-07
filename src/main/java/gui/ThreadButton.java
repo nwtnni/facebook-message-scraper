@@ -6,8 +6,8 @@ import parse.Thread;
 
 public class ThreadButton extends Button {
 
-	private static final int HEIGHT = 50;
-	private static final int WIDTH = 360;
+	private static final int HEIGHT = 53;
+	private static final int WIDTH = 375;
 	
 	public ThreadButton(Thread thread, FacebookMessageScraper gui) {
 		setText(thread.toString());

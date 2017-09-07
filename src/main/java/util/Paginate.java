@@ -28,7 +28,8 @@ public class Paginate<T> {
 	}
 
 	public List<T> page() {
-		return all.subList(PAGE_SIZE * page, PAGE_SIZE * (page + 1));
+		int last = Math.min(PAGE_SIZE * (page + 1), size());
+		return all.subList(PAGE_SIZE * page, last);
 	}
 	
 	public List<T> allPages() {
@@ -44,6 +45,6 @@ public class Paginate<T> {
 	}
 	
 	public void set(int newPage) {
-		page = (newPage > size() || newPage < 0) ? page : newPage;
+		page = (newPage > pages() || newPage < 0) ? page : newPage;
 	}
 }
