@@ -16,7 +16,8 @@ public class Paginate<T> {
 	}
 	
 	public int pages() {
-		return all.size() / PAGE_SIZE;
+		int total = all.size() / PAGE_SIZE;
+		return (all.size() % PAGE_SIZE == 0) ? total : total + 1;
 	}
 	
 	public int size() {

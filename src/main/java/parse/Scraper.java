@@ -22,6 +22,7 @@ public class Scraper {
 		this.user = doc.select("h1").first().text();
 		doc.select(".thread").forEach(thread -> threads.add(new Thread(thread, user)));
 		collapseThreads();
+		filterThreads();
 	}
 
 	public List<Thread> getThreads() {
@@ -44,5 +45,11 @@ public class Scraper {
 			);
 		});
 		threads = collapsed;
+	}
+	
+	// Remove empty conversations
+	private void filterThreads() {
+		threads.removeIf(thread -> thread.getPeople().equals(""));
+		threads.removeIf(thread -> thread.getMessages().size() < 5);
 	}
 }
