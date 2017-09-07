@@ -35,7 +35,7 @@
                         </ToolBar>
                      </top>
                      <bottom>
-                        <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <ToolBar fx:id="threadsToolbar" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search" textAlignment="CENTER" wrappingWidth="50.0">
                                  <font>
@@ -43,7 +43,8 @@
                                  </font>
                               </Text>
                               <Separator orientation="VERTICAL" />
-                              <TextField fx:id="search" prefHeight="25.0" prefWidth="300.0" promptText="Name(s)" />
+                              <TextField fx:id="search" prefHeight="25.0" prefWidth="190.0" promptText="Name" />
+                              <HBox prefWidth="15.0" />
                           </items>
                         </ToolBar>
                      </bottom>
@@ -63,7 +64,12 @@
                      <top>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <items>
-                              <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <HBox prefWidth="750.0">
+                                 <children>
+                                    <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                 </children>
+                              </HBox>
+                              <Button fx:id="save" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefWidth="110.0" text="Save As" />
                            </items>
                         </ToolBar>
                      </top>
@@ -71,11 +77,7 @@
                         <TextArea fx:id="display" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
                      </center>
                      <bottom>
-                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                          <items>
-                              <Button fx:id="save" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefWidth="250.0" text="Save As" />
-                          </items>
-                        </ToolBar>
+                        <ToolBar fx:id="displayToolbar" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </bottom>
                   </BorderPane>
                </children>
