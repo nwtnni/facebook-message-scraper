@@ -5,6 +5,10 @@ import parse.Thread;
 
 public enum Sort {
 	
+	ALPHABETICAL("Alphabetical", (a, b) -> {
+		return a.getPeople().compareTo(b.getPeople());
+	}),
+	
 	EARLY("Earliest First", (a, b) -> {
 		return a.getStartTime().compareTo(b.getStartTime());
 	}), 
