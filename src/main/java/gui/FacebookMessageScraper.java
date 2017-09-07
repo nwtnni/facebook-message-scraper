@@ -11,17 +11,23 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import parse.Message;
 import parse.Scraper;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import parse.Thread;
+import util.Paginate;
 
 public class FacebookMessageScraper extends Application {
 
+	private static final int MESSAGES_PER_PAGE = 1000;
+	private static final int THREADS_PER_PAGE = 15;
+	
 	private Scraper scraper;
 	private ChoiceBox<Filter> filter;
 	private ChoiceBox<Sort> sort;
@@ -31,7 +37,17 @@ public class FacebookMessageScraper extends Application {
 	private Text title;	
 	private Button save;
 	
-	private Thread thread;
+	private String threadName;
+	private Paginate<Thread> threads;
+	private Paginate<Message> thread;
+	
+	private Button nextMessage;
+	private Button backMessage;
+	private TextField setMessage;
+	private Text totalPages;
+	
+	private Button nextThread;
+	private Button backThread;
 	
 	private Filter f;
 	private Sort s;
@@ -68,10 +84,20 @@ public class FacebookMessageScraper extends Application {
 		filter = (ChoiceBox<Filter>) fxml.getNamespace().get("filter");
 		sort = (ChoiceBox<Sort>) fxml.getNamespace().get("sort");
 		search = (TextField) fxml.getNamespace().get("search");
+		
 		display = (TextArea) fxml.getNamespace().get("display");
 		people = (TilePane) fxml.getNamespace().get("people");
+		
 		title = (Text) fxml.getNamespace().get("title");
 		save = (Button) fxml.getNamespace().get("save");
+		
+		nextMessage = (Button) fxml.getNamespace().get("nextMessage");
+		backMessage = (Button) fxml.getNamespace().get("backMessage");
+		setMessage = (TextField) fxml.getNamespace().get("setMessage");
+		totalPages = (Text) fxml.getNamespace().get("totalPages");
+		
+		nextThread = (Button) fxml.getNamespace().get("nextThread");
+		backThread = (Button) fxml.getNamespace().get("backThread");
 		
 		initializeSort();
 		initializeFilter();
@@ -117,7 +143,9 @@ public class FacebookMessageScraper extends Application {
 			File f = fc.showSaveDialog(primary);
 			
 			try (FileWriter writer = new FileWriter(f)) {
-				writer.write(display.getText());
+				for (Message message : thread.allPages()) {
+					writer.write(message.toString() + "\n");
+				}
 			} catch (IOException e) { //TODO 
 			}
 		});
@@ -142,13 +170,42 @@ public class FacebookMessageScraper extends Application {
 	
 	private void refreshThread() {
 		StringBuilder sb = new StringBuilder();
-		thread.getMessages().forEach(message -> sb.append(message + "\n"));
+		thread.page().forEach(message -> sb.append(message + "\n"));
 		display.setText(sb.toString());
-		title.setText("Conversation With " + thread.toString() + " (" + thread.getMessages().size() + " lines)");
+		totalPages.setText("out of " + thread.pages());
+		setMessage.setText(Integer.toString(thread.current() + 1));
+		title.setText("Conversation With " + threadName + " (" + thread.size() + " lines)");
 	}
 	
-	public void setThread(Thread thread) {
-		this.thread = thread;
+	public void setThread(Thread t) {
+		thread = new Paginate<>(t.getMessages(), MESSAGES_PER_PAGE);
+		threadName = t.toString();
+		
+		nextMessage.setDisable(false);
+		backMessage.setDisable(false);
+		setMessage.setDisable(false);
+		save.setDisable(false);
+		
+		nextMessage.setOnAction(click -> {
+			thread.next();
+			refreshThread();
+		});
+		
+		backMessage.setOnAction(click -> {
+			thread.back();
+			refreshThread();
+		});
+		
+		setMessage.setOnKeyPressed(key -> {
+			if (key.getCode().equals(KeyCode.ENTER)) {
+				try {
+					thread.set(Integer.parseInt(setMessage.getText()) - 1);
+					refreshThread();
+				} catch (NumberFormatException e) {
+					setMessage.setText(Integer.toString(thread.current() + 1));
+				}
+			}
+		});
 		refreshThread();
 	}
 
