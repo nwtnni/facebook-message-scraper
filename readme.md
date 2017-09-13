@@ -19,6 +19,12 @@ supports writing conversations to text file.
 
 ### Setup
 
+In order for this program to work, you'll need two things:
+- [Your personal Facebook archive](https://www.facebook.com/help/131112897028467)
+- [The Java Runtime Environment](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+
+#### Facebook Archive
+
 Facebook allows users to download an archive of all of their
 personal messages, including their old messages. To download
 your data archive, go to Facebook -> Settings. Under the
@@ -31,12 +37,18 @@ Follow the subsequent directions, and you should have a
 `facebook-<USERNAME>.zip` file. Unzip it and you'll find your
 `messages.htm` file in the `html` folder.
 
-Download the program (facebook-message-scraper.jar) and open by following the
-directions below.
+#### Java Runtime Environment
+
+You probably already have a JRE installed. Windows users
+can check by opening the command prompt and typing `java -version`,
+whereas Mac users can open the terminal and also type `java -version`.
+Check for version 1.8 or greater. If you don't get meaningful output
+(e.g. `java executable not found`), you'll have to 
+[download and install Java.](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 
 ### Download
 
-If you're unfamiliar with git or Github, a direct download is
+Finally, you'll have to download the program itself. If you're unfamiliar with git or Github, a direct download is
 available from DropBox at [this link](https://www.dropbox.com/s/mttd8ryh7wjji8m/facebook-message-scraper.jar?dl=0).
 
 Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
