@@ -10,14 +10,14 @@ supports writing conversations to text file.
 
 ### Features
 
-- Sort threads by start date or length
+- Sort threads by start date, length, or alphabetically
 - Filter group or private messages
 - Search for threads with a specific person
 - View the total number of messages (in lines) exchanged
 - Revisit threads from the very beginning
 - Export threads directly to text files
 
-### Directions
+### Setup
 
 Facebook allows users to download an archive of all of their
 personal messages, including their old messages. To download
@@ -25,14 +25,14 @@ your data archive, go to Facebook -> Settings. Under the
 General Account Settings, underneath all of the fields, there
 should be a small link that says `Download a copy of your Facebook data`.
 
+![Screenshot of Facebook settings](settings.png)
+
 Follow the subsequent directions, and you should have a
 `facebook-<USERNAME>.zip` file. Unzip it and you'll find your
 `messages.htm` file in the `html` folder.
 
-After you open up this program, it will prompt you to select 
-the proper `messages.htm` file. Just point it to the file you
-found in the above paragraph, wait a bit, and you should be good
-to go!
+Download the program (facebook-message-scraper.jar) and open by following the
+directions below.
 
 ### Download
 
@@ -48,9 +48,18 @@ or you can call `gradle jar` to build it yourself.
 
 Double-clicking the .jar file should also work.
 
+After double-clicking, a file selector will immediately pop up. Choose
+the `messages.htm` file you downloaded in the **Setup** step, and the
+program will begin sorting through your messages. This might take
+a minute or two, but after that you should be all set.
+
 ### Issues
 
-JavaFX can be a little laggy when dealing with extremely large strings. I'm considering
-adding paging to long threads, but so far the lag is manageable up to about
-50,000 messages. Saving to file and using a more robust text editor is probably
-your best bet for anything large.
+Right now, each message is its own Java object, which can eat up RAM
+fairly quickly. If the program crashes after selecing the file but
+before the GUI appears, Java probably ran out of memory. To fix this,
+you can launch Java with command-line arguments to allow more RAM usage:
+
+`java -jar -Xmx1024m facebook-message-scraper.jar`
+
+So far this hasn't been an issue for most people.
