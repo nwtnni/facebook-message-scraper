@@ -133,7 +133,7 @@ public class FacebookMessageScraper extends Application {
 	
 	private void initializeSearch() {
 		search.textProperty().addListener((observable, oldV, newV) -> {
-			query = (newV == null || newV.length() == 0) ? null : newV;
+			query = (newV == null || newV.length() == 0) ? null : newV.toLowerCase();
 			refreshFilters();
 		});
 	}
@@ -161,7 +161,7 @@ public class FacebookMessageScraper extends Application {
 				if (query == null || query.equals("")) {
 					return true;
 				} else {
-					return t.getPeople().contains(query);
+					return t.getPeople().toLowerCase().contains(query);
 				}
 			})
 			.filter(f.getPredicate())

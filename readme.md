@@ -26,7 +26,7 @@ In order for this program to work, you'll need two things:
 #### Facebook Archive
 
 Facebook allows users to download an archive of all of their
-personal messages, including their old messages. To download
+personal data, including their old messages. To download
 your data archive, go to Facebook -> Settings. Under the
 General Account Settings, underneath all of the fields, there
 should be a small link that says `Download a copy of your Facebook data`.
