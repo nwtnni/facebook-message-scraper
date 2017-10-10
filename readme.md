@@ -1,8 +1,8 @@
 ## Facebook Message Scraper
 
 JavaFX-based program for parsing Facebook data archives. Allows you to easily access, read,
-and count old messages and conversations (without having to deal with Messenger lag). Also
-supports writing conversations to text file.
+and count your old messages and conversations (without having to deal with Messenger lag). Also
+supports writing conversations to text files.
 
 ### Download
 
@@ -10,7 +10,7 @@ supports writing conversations to text file.
 available from DropBox at this link](https://www.dropbox.com/s/mttd8ryh7wjji8m/facebook-message-scraper.jar?dl=0).
 
 Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
-or you if you have Gradle installed, you can call `gradle jar` to build it yourself.
+or if you have Gradle installed, you can call `gradle jar` to build it yourself.
 
 ### Setup
 
