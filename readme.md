@@ -4,6 +4,14 @@ JavaFX-based program for parsing Facebook data archives. Allows you to easily ac
 and count old messages and conversations (without having to deal with Messenger lag). Also
 supports writing conversations to text file.
 
+### Download
+
+[If you're unfamiliar with git or Github, a direct download is
+available from DropBox at this link](https://www.dropbox.com/s/mttd8ryh7wjji8m/facebook-message-scraper.jar?dl=0).
+
+Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
+or you if you have Gradle installed, you can call `gradle jar` to build it yourself.
+
 ### Setup
 
 In order for this program to work, you'll need two things:
@@ -32,14 +40,6 @@ whereas Mac users can open the terminal and also type `java -version`.
 Check for version 1.8 or greater. If you don't get meaningful output
 (e.g. `java executable not found`), you'll have to 
 [download and install Java by clicking this link.](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
-
-### Download
-
-Finally, you'll have to download the program itself. If you're unfamiliar with git or Github, [a direct download is
-available from DropBox at this link](https://www.dropbox.com/s/mttd8ryh7wjji8m/facebook-message-scraper.jar?dl=0).
-
-Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
-or you can call `gradle jar` to build it yourself.
 
 ### Usage
 
