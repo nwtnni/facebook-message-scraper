@@ -7,7 +7,7 @@ supports writing conversations to text files.
 ### Download
 
 [If you're unfamiliar with git or Github, a direct download is
-available from DropBox at this link](https://www.dropbox.com/s/mttd8ryh7wjji8m/facebook-message-scraper.jar?dl=0).
+available from DropBox at this link](https://www.dropbox.com/s/e5pkcbye5rub6gx/facebook-message-scraper.jar?dl=0).
 
 Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
 or if you have Gradle installed, you can call `gradle jar` to build it yourself.
