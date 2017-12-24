@@ -21,6 +21,7 @@ public class Thread {
 	private StringBuilder messages;
 	private ZonedDateTime start;
 	private ZonedDateTime end;
+	private int size;
 	
 	public Thread(Element e, String user) {
 		this.messages = new StringBuilder();
@@ -30,16 +31,21 @@ public class Thread {
 			start = Message.getTime(data.get(0));
 			end = Message.getTime(data.get(data.size() - 1));
 		}
+		data.removeIf(message -> Message.empty(message));
 		data.forEach(message -> Message.append(message, messages));
+		this.size = data.size();
 		this.people = new HashSet<String>(e.select(".user").eachText());
 		this.people.remove(user);
 		this.ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
 	}
 	
-	private Thread(Set<String> ID, Set<String> people, StringBuilder messages) {
+	private Thread(Set<String> ID, Set<String> people, ZonedDateTime start, ZonedDateTime end, StringBuilder messages, int size) {
 		this.ID = ID;
 		this.people = people;
+		this.start = start;
+		this.end = end;
 		this.messages = messages;
+		this.size = size;
 	}
 	
 	public Set<String> getID() {
@@ -61,6 +67,10 @@ public class Thread {
 	public String getPeople() {
 		String names = people.stream().sorted().reduce("", (a, b) -> a + ", " + b);
 		return (names.length() > 3) ? names.substring(2) : names;
+	}
+	
+	public int size() {
+		return size;
 	}
 	
 	public String toString() {
@@ -85,11 +95,11 @@ public class Thread {
 		ZonedDateTime timeB = other.getStartTime();
 		
 		if (timeA.isBefore(timeB)) {
-			messages.append(other.getMessages());
-			return new Thread(ID, people, messages);
+			messages.append(other.getMessages().toString());
+			return new Thread(ID, people, start, other.getEndTime(), messages, size() + other.size());
 		} else {
-			other.getMessages().append(messages);
-			return new Thread(ID, people, other.getMessages());
+			other.getMessages().append(messages.toString());
+			return new Thread(ID, people, timeB, getEndTime(), other.getMessages(), size() + other.size());
 		}
 	}
 	

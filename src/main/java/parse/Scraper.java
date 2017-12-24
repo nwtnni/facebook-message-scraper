@@ -21,12 +21,12 @@ public class Scraper {
 		this.threads = new ArrayList<>();
 		this.user = doc.select("h1").first().text();
 		doc.select(".thread").forEach(thread -> threads.add(new Thread(thread, user)));
-		collapseThreads();
 		filterThreads();
+		collapseThreads();
 	}
 
 	public List<Thread> getThreads() {
-		return Collections.unmodifiableList(threads);
+		return threads;
 	}
 	
 	// Facebook caps single threads at 10,000 lines
@@ -50,6 +50,6 @@ public class Scraper {
 	// Remove empty conversations
 	private void filterThreads() {
 		threads.removeIf(thread -> thread.getPeople().equals(""));
-		threads.removeIf(thread -> thread.getMessages().length() < 50);
+		threads.removeIf(thread -> thread.size() < 10);
 	}
 }

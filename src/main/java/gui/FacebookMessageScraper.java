@@ -147,8 +147,8 @@ public class FacebookMessageScraper extends Application {
 			File f = fc.showSaveDialog(primary);
 			
 			try (FileWriter writer = new FileWriter(f)) {
-				for (Message message : thread.allPages()) {
-					writer.write(message.toString() + "\n");
+				for (String message : thread.allPages()) {
+					writer.write(message);
 				}
 			} catch (IOException e) { //TODO 
 			}
