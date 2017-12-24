@@ -18,18 +18,25 @@ public class Thread {
 	
 	private final Set<String> ID;
 	private Set<String> people;
-	private List<Message> messages;
+	private StringBuilder messages;
+	private ZonedDateTime start;
+	private ZonedDateTime end;
 	
 	public Thread(Element e, String user) {
-		this.messages = new ArrayList<>();
-		e.select(".message").forEach(message -> messages.add(new Message(message)));
-		Collections.reverse(messages);
+		this.messages = new StringBuilder();
+		ArrayList<Element> data = e.select(".message");
+		Collections.reverse(data);
+		if (data.size() > 0) {
+			start = Message.getTime(data.get(0));
+			end = Message.getTime(data.get(data.size() - 1));
+		}
+		data.forEach(message -> Message.append(message, messages));
 		this.people = new HashSet<String>(e.select(".user").eachText());
 		this.people.remove(user);
 		this.ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
 	}
 	
-	private Thread(Set<String> ID, Set<String> people, List<Message> messages) {
+	private Thread(Set<String> ID, Set<String> people, StringBuilder messages) {
 		this.ID = ID;
 		this.people = people;
 		this.messages = messages;
@@ -40,15 +47,15 @@ public class Thread {
 	}
 	
 	public ZonedDateTime getStartTime() {
-		return messages.get(0).getTime();
+		return start;
 	}
 	
 	public ZonedDateTime getEndTime() {
-		return messages.get(messages.size() - 1).getTime();
+		return end;
 	}
 	
-	public List<Message> getMessages() {
-		return Collections.unmodifiableList(messages);
+	public StringBuilder getMessages() {
+		return messages;
 	}
 	
 	public String getPeople() {
@@ -77,17 +84,13 @@ public class Thread {
 		ZonedDateTime timeA = getStartTime();
 		ZonedDateTime timeB = other.getStartTime();
 		
-		List<Message> combined = new ArrayList<>();
-		
 		if (timeA.isBefore(timeB)) {
-			combined.addAll(messages);
-			combined.addAll(other.getMessages());
+			messages.append(other.getMessages());
+			return new Thread(ID, people, messages);
 		} else {
-			combined.addAll(other.getMessages());
-			combined.addAll(messages);
+			other.getMessages().append(messages);
+			return new Thread(ID, people, other.getMessages());
 		}
-		
-		return new Thread(ID, people, combined);
 	}
 	
 	/*

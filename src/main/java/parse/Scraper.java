@@ -50,6 +50,6 @@ public class Scraper {
 	// Remove empty conversations
 	private void filterThreads() {
 		threads.removeIf(thread -> thread.getPeople().equals(""));
-		threads.removeIf(thread -> thread.getMessages().size() < 5);
+		threads.removeIf(thread -> thread.getMessages().length() < 50);
 	}
 }

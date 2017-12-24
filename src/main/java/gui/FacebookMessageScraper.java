@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class FacebookMessageScraper extends Application {
 	
 	private String threadName;
 	private Paginate<Thread> threads;
-	private Paginate<Message> thread;
+	private Paginate<String> thread;
 	
 	private Button nextMessage;
 	private Button backMessage;
@@ -203,7 +204,8 @@ public class FacebookMessageScraper extends Application {
 	}
 	
 	public void setThread(Thread t) {
-		thread = new Paginate<>(t.getMessages(), MESSAGES_PER_PAGE);
+		String messages = t.getMessages().toString();
+		thread = new Paginate<>(Arrays.asList(messages.split("\n")), MESSAGES_PER_PAGE);
 		threadName = t.toString();
 		
 		nextMessage.setDisable(false);
