@@ -14,7 +14,7 @@ public enum Sort {
 	}), 
 	
 	LONG("Longest First", (a, b) -> {
-		return b.getMessages().size() - a.getMessages().size();
+		return b.size() - a.size();
 	});
 	
 	private String str;

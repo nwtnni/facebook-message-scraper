@@ -17,23 +17,27 @@ public class Scraper {
 	private String user;
 	
 	public void parse(File f) throws IOException {
+		System.out.println("Starting to parse...");
 		Document doc = Jsoup.parse(f, null);
+		System.out.println("Done parsing HTML file.");
 		this.threads = new ArrayList<>();
 		this.user = doc.select("h1").first().text();
 		doc.select(".thread").forEach(thread -> threads.add(new Thread(thread, user)));
-		collapseThreads();
+		System.out.println("Filtering threads...");
 		filterThreads();
+		System.out.println("Collapsing threads...");
+		collapseThreads();
 	}
 
 	public List<Thread> getThreads() {
-		return Collections.unmodifiableList(threads);
+		return threads;
 	}
 	
 	// Facebook caps single threads at 10,000 lines
 	private void collapseThreads() {
 		ArrayList<Thread> collapsed = new ArrayList<>();
 		Set<Set<String>> unique = new HashSet<>();
-		
+		System.out.println("Before collapsing: " + threads.size() + " threads");
 		threads.forEach(thread -> unique.add(thread.getID()));
 		unique.forEach(id -> {
 			collapsed.add(
@@ -45,11 +49,14 @@ public class Scraper {
 			);
 		});
 		threads = collapsed;
+		System.out.println("After collapsing: " + threads.size() + " threads");
 	}
 	
 	// Remove empty conversations
 	private void filterThreads() {
+		System.out.println("\tBefore filtering: " + threads.size() + " threads");
 		threads.removeIf(thread -> thread.getPeople().equals(""));
-		threads.removeIf(thread -> thread.getMessages().size() < 5);
+		threads.removeIf(thread -> thread.size() < 10);
+		System.out.println("\tAfter filtering: " + threads.size() + " threads");
 	}
 }

@@ -18,21 +18,35 @@ public class Thread {
 	
 	private final Set<String> ID;
 	private Set<String> people;
-	private List<Message> messages;
+	private StringBuilder messages;
+	private ZonedDateTime start;
+	private ZonedDateTime end;
+	private int size;
 	
 	public Thread(Element e, String user) {
-		this.messages = new ArrayList<>();
-		e.select(".message").forEach(message -> messages.add(new Message(message)));
-		Collections.reverse(messages);
+		this.messages = new StringBuilder();
+		ArrayList<Element> data = e.select(".message");
+		Collections.reverse(data);
+		if (data.size() > 0) {
+			start = Message.getTime(data.get(0));
+			end = Message.getTime(data.get(data.size() - 1));
+		}
+		data.removeIf(message -> Message.empty(message));
+		data.forEach(message -> Message.append(message, messages));
+		this.size = data.size();
 		this.people = new HashSet<String>(e.select(".user").eachText());
 		this.people.remove(user);
+		System.out.println("Found new thread with users: " + this.toString());
 		this.ID = new HashSet<String>(Arrays.asList(e.ownText().split(",[ ]*")));
 	}
 	
-	private Thread(Set<String> ID, Set<String> people, List<Message> messages) {
+	private Thread(Set<String> ID, Set<String> people, ZonedDateTime start, ZonedDateTime end, StringBuilder messages, int size) {
 		this.ID = ID;
 		this.people = people;
+		this.start = start;
+		this.end = end;
 		this.messages = messages;
+		this.size = size;
 	}
 	
 	public Set<String> getID() {
@@ -40,20 +54,24 @@ public class Thread {
 	}
 	
 	public ZonedDateTime getStartTime() {
-		return messages.get(0).getTime();
+		return start;
 	}
 	
 	public ZonedDateTime getEndTime() {
-		return messages.get(messages.size() - 1).getTime();
+		return end;
 	}
 	
-	public List<Message> getMessages() {
-		return Collections.unmodifiableList(messages);
+	public StringBuilder getMessages() {
+		return messages;
 	}
 	
 	public String getPeople() {
 		String names = people.stream().sorted().reduce("", (a, b) -> a + ", " + b);
 		return (names.length() > 3) ? names.substring(2) : names;
+	}
+	
+	public int size() {
+		return size;
 	}
 	
 	public String toString() {
@@ -77,17 +95,13 @@ public class Thread {
 		ZonedDateTime timeA = getStartTime();
 		ZonedDateTime timeB = other.getStartTime();
 		
-		List<Message> combined = new ArrayList<>();
-		
 		if (timeA.isBefore(timeB)) {
-			combined.addAll(messages);
-			combined.addAll(other.getMessages());
+			messages.append(other.getMessages().toString());
+			return new Thread(ID, people, start, other.getEndTime(), messages, size() + other.size());
 		} else {
-			combined.addAll(other.getMessages());
-			combined.addAll(messages);
+			other.getMessages().append(messages.toString());
+			return new Thread(ID, people, timeB, getEndTime(), other.getMessages(), size() + other.size());
 		}
-		
-		return new Thread(ID, people, combined);
 	}
 	
 	/*
