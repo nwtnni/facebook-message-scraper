@@ -149,7 +149,7 @@ public class FacebookMessageScraper extends Application {
 			
 			try (FileWriter writer = new FileWriter(f)) {
 				for (String message : thread.allPages()) {
-					writer.write(message);
+					writer.write(message + "\n");
 				}
 			} catch (IOException e) { //TODO 
 			}
