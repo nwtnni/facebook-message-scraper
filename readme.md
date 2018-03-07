@@ -1,16 +1,14 @@
-## Facebook Message Scraper
+# Facebook Message Scraper
 
 JavaFX-based program for parsing Facebook data archives. Allows you to easily access, read,
 and count your old messages and conversations (without having to deal with Messenger lag). Also
 supports writing conversations to text files.
 
-### Download
+# ![Download From GitHub](https://github.com/nwtnni/facebook-message-scraper/releases/download/v1.0/facebook-message-scraper.jar)
 
-[If you're unfamiliar with git or Github, a direct download is
-available from DropBox at this link](https://www.dropbox.com/s/e5pkcbye5rub6gx/facebook-message-scraper.jar?dl=0).
+### Screenshot
 
-Otherwise, you can clone the repo: the .jar file is located in the build/libs directory,
-or if you have Gradle installed, you can call `gradle jar` to build it yourself.
+![Screenshot of GUI](screenshot.png)
 
 ### Setup
 
@@ -29,8 +27,6 @@ Facebook allows users to download an archive of all of their personal data, incl
 
 3. Follow Facebook's directions to download your `facebook-<YOUR-USERNAME>.zip` file.
 4. Unzip the folder.
-5. Inside should be an `html` folder.
-6. Inside that should be a `messages.htm` file. This is the one you want.
 
 #### Java Runtime Environment
 
@@ -48,13 +44,10 @@ Check for version 1.8 or greater. If you don't get meaningful output
 Double-clicking the .jar file should also work.
 
 After double-clicking, a file selector will immediately pop up. Choose
-the `messages.htm` file you downloaded in the **Setup** step, and the
-program will begin sorting through your messages. This might take
+the unzipped `facebook` folder from the **Setup** step, and the
+program will begin sorting through your messages, displaying what conversation
+it's currently working on. This might take
 a minute or two, but after that you should be all set.
-
-### Screenshot
-
-![Screenshot of GUI](screenshot.png)
 
 ### Features
 
@@ -67,11 +60,15 @@ a minute or two, but after that you should be all set.
 
 ### Issues
 
-Right now, each message is its own Java object, which can eat up RAM
-fairly quickly. If the program crashes after selecing the file but
-before the GUI appears, Java probably ran out of memory. To fix this,
-you can launch Java with command-line arguments to allow more RAM usage:
+If you have enormous conversations, Java may run out of memmory.
+If the program crashes after selecing the file but
+before the GUI appears, Java probably ran out of memory. To try and fix this,
+you can launch Java with command-line arguments to allow more RAM usage, e.g.:
 
 `java -jar -Xmx1024m facebook-message-scraper.jar`
+
+or
+
+`java -jar -Xmx2048m facebook-message-scraper.jar`
 
 So far this hasn't been an issue for most people.
