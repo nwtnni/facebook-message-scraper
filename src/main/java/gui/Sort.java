@@ -6,7 +6,7 @@ import parse.Thread;
 public enum Sort {
 	
 	ALPHABETICAL("Alphabetical", (a, b) -> {
-		return a.getPeople().compareTo(b.getPeople());
+		return a.toString().compareTo(b.toString());
 	}),
 	
 	EARLY("Earliest First", (a, b) -> {

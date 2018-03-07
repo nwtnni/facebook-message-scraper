@@ -23,6 +23,7 @@ import parse.Message;
 import parse.Scraper;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.DirectoryChooser;
 import parse.Thread;
 import util.Paginate;
 
@@ -58,11 +59,10 @@ public class FacebookMessageScraper extends Application {
 	
 	@Override
 	public void start(Stage primary) throws Exception {
-		FileChooser fc = new FileChooser();
-		fc.setTitle("Select your message file to get started!");
-		fc.setSelectedExtensionFilter(new ExtensionFilter("Message file", "*.htm"));
-		File f = fc.showOpenDialog(primary);
-
+		DirectoryChooser dc = new DirectoryChooser();
+		dc.setTitle("Select your Facebook folder to get started!");
+		File f = dc.showDialog(primary);
+		
 		if (f == null) {
 			Platform.exit();
 		}
@@ -71,6 +71,7 @@ public class FacebookMessageScraper extends Application {
 			scraper = new Scraper();
 			scraper.parse(f);
 		} catch (IOException e) {
+			System.out.println(e);
 			Platform.exit();
 		}
 		
@@ -162,7 +163,7 @@ public class FacebookMessageScraper extends Application {
 				if (query == null || query.equals("")) {
 					return true;
 				} else {
-					return t.getPeople().toLowerCase().contains(query);
+					return t.getPeople().contains(query.toLowerCase());
 				}
 			})
 			.filter(f.getPredicate())
@@ -197,7 +198,7 @@ public class FacebookMessageScraper extends Application {
 		totalPages.setText("out of " + thread.pages());
 		setMessage.setText(Integer.toString(thread.current() + 1));
 
-		title.setText("Conversation With " + threadName + " (" + thread.size() + " lines)");
+		title.setText(threadName + " (" + thread.size() + " lines)");
 		
 		backMessage.setDisable(thread.current() == 0);
 		nextMessage.setDisable(thread.current() == thread.pages() - 1);
