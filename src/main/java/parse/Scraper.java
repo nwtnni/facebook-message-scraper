@@ -24,13 +24,17 @@ public class Scraper {
 		this.threads = new ArrayList<>();
 		
 		for (File threadFile : threadFiles.listFiles(file -> file.getPath().endsWith(".html"))) {
+
 			Document thread = Jsoup.parse(threadFile, null);
 			Element e = thread.select(".thread").first();
-			System.out.println("Currently parsing: " + e.select("h3").text());
-			threads.add(new Thread(e, this.user));
+
+			try {
+				threads.add(new Thread(e, this.user));
+			} catch (NullPointerException np) {
+				// Empty thread
+			}
 		}
 
-		threads.removeIf(t -> t.size() < 10);
 		threads.removeIf(t -> t.toString().equals("Conversation with Facebook User"));
 	}
 

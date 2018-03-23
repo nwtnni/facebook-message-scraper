@@ -6,40 +6,73 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jsoup.nodes.Element;
 
+import util.Time;
+
 public class Thread {
 	
+	// Eager
+	private Element data;
 	private String title; 
 	private Set<String> people;
-	private StringBuilder messages;
 	private ZonedDateTime start;
-	private ZonedDateTime end;
 	private int size;
 	
+	// Lazy
+	private boolean loaded;
+	private List<Message> messages;
+	
 	public Thread(Element e, String user) {
-		this.messages = new StringBuilder();
-		ArrayList<Element> data = e.select(".message");
-		Collections.reverse(data);
-		if (data.size() > 0) {
-			start = Message.getTime(data.get(0));
-			end = Message.getTime(data.get(data.size() - 1));
-		}
+
+		// Eagerly loaded thread information
+		this.data = e;
 		
-		// Remove empty sticker messages
-		data.removeIf(message -> Message.empty(message));
-		data.forEach(message -> Message.append(message, messages));
+		this.title = e.select("h3")
+			.first()
+			.text()
+			.replace("Conversation with ", "");
 		
-		this.size = data.size();
-		this.title = e.select("h3").first().text().replace("Conversation with ", "");
 		this.people = new HashSet<String>(Arrays.asList(
-			e.ownText().replace("Participants: ", "").toLowerCase().split(",[ ]+")
+			e.ownText()
+				.replace("Participants: ", "")
+				.toLowerCase()
+				.split(",[ ]+")
 		));
+		
+		this.start = Time.parse(
+			e.select(".message")
+				.last()
+				.select(".meta")
+				.first()
+				.text()
+		);
+		
+		this.size = e.select(".message").size();
+		
+		// Lazily loaded thread information
+		this.loaded = false;
+		this.messages = null;
 	}
 	
-	public StringBuilder getMessages() {
+	public List<Message> getMessages() {
+		
+		if (!loaded) {
+			messages = data.select(".message")
+					.stream()
+					.map(message -> new Message(message))
+					.filter(message -> !message.empty())
+					.collect(Collectors.toList());
+			Collections.reverse(messages);
+			
+			size = messages.size();
+			loaded = true;
+		}
+		
 		return messages;
 	}
 	
@@ -49,10 +82,6 @@ public class Thread {
 	
 	public ZonedDateTime getStartTime() {
 		return start;
-	}
-	
-	public ZonedDateTime getEndTime() {
-		return end;
 	}
 	
 	public int size() {

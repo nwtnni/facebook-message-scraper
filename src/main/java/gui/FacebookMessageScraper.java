@@ -18,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import parse.Message;
 import parse.Scraper;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -41,7 +42,7 @@ public class FacebookMessageScraper extends Application {
 	
 	private String threadName;
 	private Paginate<Thread> threads;
-	private Paginate<String> thread;
+	private Paginate<Message> thread;
 	
 	private Button nextMessage;
 	private Button backMessage;
@@ -146,8 +147,8 @@ public class FacebookMessageScraper extends Application {
 			File f = fc.showSaveDialog(primary);
 			
 			try (FileWriter writer = new FileWriter(f)) {
-				for (String message : thread.allPages()) {
-					writer.write(message + "\n");
+				for (Message message : thread.allPages()) {
+					writer.write(message.toString() + "\n");
 				}
 			} catch (IOException e) { //TODO 
 			}
@@ -190,7 +191,7 @@ public class FacebookMessageScraper extends Application {
 	
 	private void refreshThread() {
 		StringBuilder sb = new StringBuilder();
-		thread.page().forEach(message -> sb.append(message + "\n"));
+		thread.page().forEach(message -> sb.append(message));
 		display.setText(sb.toString());
 		
 		totalPages.setText("out of " + thread.pages());
@@ -203,8 +204,7 @@ public class FacebookMessageScraper extends Application {
 	}
 	
 	public void setThread(Thread t) {
-		String messages = t.getMessages().toString();
-		thread = new Paginate<>(Arrays.asList(messages.split("\n")), MESSAGES_PER_PAGE);
+		thread = new Paginate<>(t.getMessages(), MESSAGES_PER_PAGE);
 		threadName = t.toString();
 		
 		nextMessage.setDisable(false);
