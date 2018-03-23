@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
@@ -19,7 +18,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import parse.Message;
 import parse.Scraper;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -163,7 +161,7 @@ public class FacebookMessageScraper extends Application {
 				if (query == null || query.equals("")) {
 					return true;
 				} else {
-					return t.getPeople().contains(query.toLowerCase());
+					return t.contains(query.toLowerCase());
 				}
 			})
 			.filter(f.getPredicate())

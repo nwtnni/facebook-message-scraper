@@ -43,8 +43,8 @@ public class Thread {
 		return messages;
 	}
 	
-	public Set<String> getPeople() {
-		return Collections.unmodifiableSet(people);
+	public boolean contains(String search) {
+		return people.parallelStream().anyMatch(name -> name.contains(search));
 	}
 	
 	public ZonedDateTime getStartTime() {
