@@ -4,7 +4,7 @@ JavaFX-based program for parsing Facebook data archives. Allows you to easily ac
 and count your old messages and conversations (without having to deal with Messenger lag). Also
 supports writing conversations to text files.
 
-# ![Download From GitHub](https://github.com/nwtnni/facebook-message-scraper/releases/download/v1.0/facebook-message-scraper.jar)
+# ![Download From GitHub](https://github.com/nwtnni/facebook-message-scraper/releases/download/v1.1.0/facebook-message-scraper.jar)
 
 ### Screenshot
 
